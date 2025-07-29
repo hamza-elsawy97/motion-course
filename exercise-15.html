@@ -17,14 +17,101 @@
 			background-color: #F6E9FE;
 		}
 
+		svg rect, svg path {
+			stroke-width: 15;
+			stroke: #100319;
+			stroke-linecap: round;
+		}
+
+		svg {
+			overflow: visible;
+		}
+
 		/* Air */
 	</style>
 </head>
 <body>
 	<div class="container">
 		<!-- Air -->
+		 <!-- <svg width="254" height="119" viewBox="0 0 254 119" fill="none" >
+				<path id="center" d="M87.0004 57.5C85.011 -5.89325 167 -12.5 167 57.5C167.001 127.5 87.0004 133 87.0004 57.5Z" />
+				<path id="right" d="M167 57.5C167 133 247.001 127.5 247 57.5" />
+				<path id="left" d="M7.00038 57.5C5.01094 -5.89324 87.0001 -12.5 87.0005 57.5"  />
+			</svg> -->
+		<!-- Air -->
+		 <svg width="94" height="68" viewBox="0 0 94 68" fill="none">
+		<path id="center" d="M7.03589 6.66272H87.0359" stroke="#C01C1F" stroke-width="13" stroke-linecap="round"/>
+		<path id="right" d="M49.6635 61.4118L87.4251 7.48263" stroke="#C01C1F" stroke-width="13" stroke-linecap="round"/>
+		<path id="left" d="M7.66351 7.48264L45.4251 61.4118" stroke="#C01C1F" stroke-width="13" stroke-linecap="round"/>
+		</svg>
+
+
+
 	</div>
 
 	<!-- Air -->
+	 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/DrawSVGPlugin.min.js"></script>
+
+<script>
+ // use a script tag or an external JS file
+//  document.addEventListener("DOMContentLoaded", (event) => {
+//   gsap.registerPlugin(DrawSVGPlugin)
+//   // gsap code here!
+//  });
+
+gsap.set('#center', {
+	scale: 0,
+	transformOrigin: '50% 50%',
+})
+
+//timeline
+let tl = gsap.timeline({
+	repeat: -1,
+	repeatDelay: 1.6,
+	yoyo: true,
+
+})
+
+// Scale and rotate the center path
+tl.to('#center', {
+	scale: 1,
+	rotation: 360,
+	duration:1.2,
+ease: "elastic.out",
+})
+
+// Animate the left handel drawing
+tl.fromTo('#left', {
+	drawSVG: '0% 0%',
+},
+{
+	drawSVG: '0% 100%',
+	duration: 1,
+	ease: "power4.inOut",
+})
+
+
+// Animate the right handel drawing
+tl.fromTo('#right', {
+	drawSVG: '100% 100%',
+},
+{
+	drawSVG: '0% 100%',
+	duration: 1,
+	ease: "power4.inOut",
+})
+
+// Change color
+tl.to('#center, #left, #right', {
+	stroke: '#C01C1F',
+	duration: .4,
+	ease: "power4.inOut",
+})
+
+</script>
+
+
 </body>
 </html>
