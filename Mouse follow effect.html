@@ -121,7 +121,7 @@
 		}
 
 		#debugger {
-			display: none;
+			/* display: none; */
 			position: absolute;
 			left: 0;
 			bottom: 0;
@@ -132,6 +132,18 @@
 		}
 
 		/* Air */
+
+		.magneto {
+			width: 10rem;
+			height: 10rem;
+			border-radius: 50%;
+			background-color: var(--gray-100);
+			color: white;
+			cursor: pointer;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	</style>
 </head>
 <body>
@@ -162,9 +174,86 @@
 		<h1>Shaping Visions into Reality with <span>Boldness</span></h1>
 
 		<!-- Air -->
+		 <button class="magneto">
+			<span class="text">Our Work</span>
+		 </button>
+
+		 <div id="debugger"></div>
+
 		<!-- End Air -->
 	</section>
 
 	<!-- Air -->
+	<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+	 <script>
+
+	 // Get Magneto
+	 const magneto = document.querySelector('.magneto')
+	 const magnetoText = document.querySelector('.magneto .text')
+	 const debuggerEl = document.querySelector('#debugger')
+
+	 // Mouse move
+	 const activateMagneto = (e) => {
+		let boundBox = magneto.getBoundingClientRect()
+		const magnetoStrength = 40
+		const magnetoTextStrength = 80
+
+		const newX = ((e.clientX - boundBox.left) / magneto.offsetWidth) - 0.5
+		const newY = ((e.clientY - boundBox.top) / magneto.offsetHeight) - 0.5
+
+		debuggerEl.innerHTML = `
+			<div>X: ${newX}</div>
+			<div>Y: ${newY}</div>`
+
+			// Move button
+			gsap.to(magneto, {
+				x: newX * magnetoStrength,
+				y: newY * magnetoStrength,
+				rotation: newX * 10,
+				scale: 1.1,
+				ease: 'power4.easeOut',
+			})
+
+			// Move text
+			gsap.to(magnetoText, {
+				x: newX * magnetoTextStrength,
+				y: newY * magnetoTextStrength,
+				rotation: newX * 10,
+				scale: 1.1,
+				ease: 'power4.easeOut',
+			})
+
+	 }
+
+	 // Mouse leave
+	 const resetMagneto = (e) => {
+		// Move button
+			gsap.to(magneto, {
+				duration: 1,
+				x: 0,
+				y: 0,
+				ease: Elastic.easeOut,
+			})
+
+			// Move text
+			gsap.to(magnetoText, {
+				duration: 1,
+				x: 0,
+				y: 0,
+				rotation: 0,
+				ease: Elastic.easeOut,
+			})
+			
+		debuggerEl.innerHTML = `
+			<div>X: ${newX}</div>
+			<div>Y: ${newY}</div>`
+	 }
+
+	 // add event listener
+	 magneto.addEventListener('mousemove', activateMagneto)
+	 magneto.addEventListener('mouseleave', resetMagneto)
+
+
+	 </script>
 </body>
 </html>
